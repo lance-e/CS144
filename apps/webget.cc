@@ -1,16 +1,47 @@
+#include "address.hh"
 #include "socket.hh"
 
+#include <arpa/inet.h>
+#include <cstddef>
 #include <cstdlib>
 #include <iostream>
+#include <netinet/in.h>
 #include <span>
 #include <string>
+#include <strings.h>
+#include <sys/socket.h>
 
 using namespace std;
 
 void get_URL( const string& host, const string& path )
 {
-  cerr << "Function called: get_URL(" << host << ", " << path << ")\n";
-  cerr << "Warning: get_URL() has not been implemented yet.\n";
+  TCPSocket client {};
+
+  const Address addr( host, "http" );
+
+  client.connect( addr );
+
+  // send
+  string request { "GET " + path + " HTTP/1.1\r\n" };
+  cout << request;
+  string header0 { "Host: " + host + "\r\n" };
+  cout << header0;
+  string header1 { "Connection: close\r\n" };
+  cout << header1;
+  string header2 { "\r\n" };
+  cout << header2;
+  client.write( request );
+  client.write( header0 );
+  client.write( header1 );
+  client.write( header2 );
+
+  string buf;
+  while ( !client.eof() ) {
+    buf.clear();
+    client.read( buf );
+    cout << buf;
+  }
+  client.close();
 }
 
 int main( int argc, char* argv[] )

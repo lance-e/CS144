@@ -1,7 +1,7 @@
 Checkpoint 0 Writeup
 ====================
 
-My name: [your name here]
+My name: [lance]
 
 My SUNet ID: [your sunetid here]
 
