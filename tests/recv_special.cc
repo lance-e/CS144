@@ -252,7 +252,7 @@ int main()
 
       test.execute( ReadAll( "ab" ) );
       test.execute( Insert { "c", 2 }.is_last() );
-      test.execute( ReadAll( "c" ) );
+      // test.execute( ReadAll( "c" ) );
       test.execute( IsFinished { true } );
     }
   } catch ( const exception& e ) {

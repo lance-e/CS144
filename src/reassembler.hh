@@ -14,6 +14,7 @@ public:
       : output_( std::move( output ) ) 
       , cathe_()
       , last_string_index_(0)
+      , poped_byte_(0)
   {}
 
   /*
@@ -52,5 +53,6 @@ private:
   ByteStream output_; // the Reassembler writes to this ByteStream 
   std::map<uint64_t , std::string> cathe_;
   uint64_t last_string_index_;
+  uint64_t poped_byte_;
   void push_stored_bytes(size_t index_);
 };
