@@ -2,6 +2,7 @@
 
 #include "byte_stream.hh"
 #include "tcp_receiver_message.hh"
+#include "tcp_segment.hh"
 #include "tcp_sender_message.hh"
 
 #include <cstdint>
@@ -48,4 +49,20 @@ private:
   ByteStream input_;
   Wrap32 isn_;
   uint64_t initial_RTO_ms_;
+  uint16_t window_size_ = 0 ;
+  uint64_t seqno_in_flight_ = 0 ;
+  uint64_t next_seqno_ = 0 ;
+  uint64_t receive_seqno_ = 0 ;
+
+  std::queue<TCPSenderMessage> wait_ack_{};
+
+  uint64_t timeout_ = initial_RTO_ms_;
+  uint64_t consecutive_retransmission_ =  0 ;
+  bool retransmission_timer_running = false;
+  uint64_t time_ = 0 ;
+
+  bool syn_  = false;
+  bool fin_  = false;
+  bool syn_flag_ = false;
+  bool fin_flag_ = false;
 };
